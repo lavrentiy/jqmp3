@@ -44,7 +44,6 @@ DESCRIPTION
         height: 1px;
         margin-bottom: 20px;
     }
-    
     #mp3buttons{
         width: 90%;
         height 60px;
@@ -85,9 +84,7 @@ DESCRIPTION
         float: right;
         background-color: #000;
         color: #fff;
-
     }
-    
     #mp3playlist{
         list-style: none;
         padding: 5px;
@@ -126,19 +123,70 @@ DESCRIPTION
     }
 </style>
 
-    <!--script src="https://ajax.googleapis.com/ajax/libs/jquery/2.1.4/jquery.min.js"></script-->
-<script src="./resources/jquery-1.12.1.js"></script>
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/2.1.4/jquery.min.js">
+    $("#mp3pause").hide();
+</script>
+    
+<!--script src="./resources/jquery-1.12.1.js"></script-->
+    
 <script>
+    
+$(document).ready(function(){
+    var audio;
+    
+    //hide pause button 
+    $("#mp3pause").hide();
+    
+    initAudio($("#mp3playlist li:first-child"));
+                
+    //init function
+    function initAudio(element){
+        var song = element.attr('song');
+        var title = element.text();
+        var cover = element.attr('cover');
+        var artist = element.attr('artist');
+
+        //create audio object
+        audio = new Audio('media/' + song);
+	
+        if(!audio.currentTime){
+		$('#mp3duration').html('0.00');
+        }
+
+        $('#mp3player .title').text(title);
+        $('#mp3player .artist').text(artist);
+	
+        $('#mp3playlist li').removeClass('active');
+        element.addClass('active');
+}
+
+    //click to play function
+    $('#mp3playlist li').click(function (){
+        audio.pause();
+        initAudio($(this));
+        $('#mp3play').hide();
+        $('#mp3pause').show();
+        $('#mp3duration').fadeIn(400);
+        audio.play();
+        showDuration();
+    });
+    
+    
+});
 
 </script>
 </head>
 <body>    
 <div id="container">
     <div id="mp3player">
+        <br>
+
         <div id="mp3info">
-            <span class="artist"></span> - <span class="title"></span><br><br>
-        </div>
+            <span class="title"></span><br><br>
+        </div><br><br>
+        
         <input id="mp3volume" type=range min="0" max="20" value="10"><br>
+        
         <div id="mp3buttons">
             <button id="mp3prev">&#60;&#60;</button>
             <button id="mp3play">&#9658;</button>
@@ -146,10 +194,13 @@ DESCRIPTION
             <button id="mp3stop">&#8718;</button>
             <button id="mp3next">&#62;&#62;	</button>
         </div>
+        
         <div id="mp3tracker">
+            
             <div id="mp3progressbar">
                 <span id="mp3progress"></span>
             </div>
+            
             <span id="mp3duration"></span>
         </div>
 <br>
@@ -158,13 +209,12 @@ DESCRIPTION
 <br>
 <br>
 <br>
-<br>
         <ul id="mp3playlist">
-            <li song="Suzanne Vega - Tom's Diner.mp3" artist="Suzanne Vega">Suzanne Vega - Tom's Diner</li>
+            <li song="Suzanne Vega - Tom&#39;s Diner.mp3" artist="Suzanne Vega">Suzanne Vega - Tom&#39;s Diner</li>
             <li song="Kattison - I Know You're Ready.mp3" artist="Kattison">Kattison - I Know You're Ready</li>
             <li song="Tchami - Untrue (Extended Mix).mp3" artist="Tchami">Tchami - Untrue (Extended Mix)</li>
-            <li song="Tom Zanetti - Darlin.mp3" artist="Tom Zanetti">Tom Zanetti - Darlin</li>
-            <li song="Years & Years - Desire (Zac Samuel Remix).mp3" artist="Years & Years">Years &#38;	 Years - Desire (Zac Samuel Mix)</li>
+            <li song="Tom Zanetti - Darlin&#39;.mp3" artist="Tom Zanetti">Tom Zanetti - Darlin&#39;</li>
+            <li song="Years &#38; Years - Desire (Zac Samuel Remix).mp3" artist="Years &#38; Years">Years &#38;	 Years - Desire (Zac Samuel Mix)</li>
             <li song="Axel Boman - Purple Drank.mp3" artist="Axel Boman">Axel Boman - Purple Drank</li>
         </ul>
     </div>
