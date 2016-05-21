@@ -158,9 +158,29 @@ $(document).ready(function(){
 	
         $('#mp3playlist li').removeClass('active');
         element.addClass('active');
-}
-
-    //click to play function
+    }
+    //play button function
+    $('#mp3play').click(function(){
+        audio.play();
+        $('#mp3play').hide();
+        $('#mp3pause').show();
+        $('#mp3duration').fadeIn(400);
+        showDuration();
+    });
+    
+    //pause button function
+    $('#mp3pause').click(function(){
+        audio.pause();
+        $('#mp3pause').hide();
+        $('#mp3play').show();
+    });
+    
+    //volume control function
+    $('#mp3volume').change(function(){
+	   audio.volume = parseFloat(this.value / 10);
+    });
+    
+    //click playlist to play function
     $('#mp3playlist li').click(function (){
         audio.pause();
         initAudio($(this));
@@ -170,7 +190,6 @@ $(document).ready(function(){
         audio.play();
         showDuration();
     });
-    
     
 });
 
@@ -185,13 +204,13 @@ $(document).ready(function(){
             <span class="title"></span><br><br>
         </div><br><br>
         
-        <input id="mp3volume" type=range min="0" max="20" value="10"><br>
+        <input id="mp3volume" type=range min="0" max="10" value="5"><br>
         
         <div id="mp3buttons">
             <button id="mp3prev">&#60;&#60;</button>
-            <button id="mp3play">&#9658;</button>
-            <button id="mp3pause">&#10074;&#10074;</button>
-            <button id="mp3stop">&#8718;</button>
+            <button id="mp3play">play</button>
+            <button id="mp3pause">pause</button>
+            <button id="mp3stop">stop</button>
             <button id="mp3next">&#62;&#62;	</button>
         </div>
         
@@ -203,12 +222,12 @@ $(document).ready(function(){
             
             <span id="mp3duration"></span>
         </div>
-<br>
-<br>
-<br>
-<br>
-<br>
-<br>
+        <br>
+        <br>
+        <br>
+        <br>
+        <br>
+        <br>
         <ul id="mp3playlist">
             <li song="Suzanne Vega - Tom&#39;s Diner.mp3" artist="Suzanne Vega">Suzanne Vega - Tom&#39;s Diner</li>
             <li song="Kattison - I Know You're Ready.mp3" artist="Kattison">Kattison - I Know You're Ready</li>
